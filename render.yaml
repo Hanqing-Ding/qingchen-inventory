@@ -1,0 +1,21 @@
+# Render Blueprint — Web Service (Free)
+# CLI: RENDER_API_KEY=... ./scripts/deploy-render.sh
+services:
+  - type: web
+    name: qingchen-inventory
+    runtime: node
+    plan: free
+    region: singapore
+    branch: main
+    buildCommand: npm ci && npm run build
+    startCommand: npm start
+    healthCheckPath: /login
+    envVars:
+      - key: NODE_VERSION
+        value: "20"
+      - key: NEXT_PUBLIC_SUPABASE_URL
+        value: https://YOUR_PROJECT_REF.supabase.co
+      - key: NEXT_PUBLIC_SUPABASE_ANON_KEY
+        value: YOUR_ANON_KEY
+      - key: NEXT_PUBLIC_USE_MOCK_DATA
+        value: "true"

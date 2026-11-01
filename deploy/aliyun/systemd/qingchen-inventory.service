@@ -1,0 +1,21 @@
+[Unit]
+Description=Qingchen Fashion Inventory (Next.js)
+After=network.target
+
+[Service]
+Type=simple
+User=www-data
+Group=www-data
+WorkingDirectory=/opt/qingchen-inventory
+EnvironmentFile=/opt/qingchen-inventory/.env.production
+ExecStart=/usr/bin/node /opt/qingchen-inventory/server.js
+Restart=always
+RestartSec=5
+# Soft limits
+LimitNOFILE=65535
+# Security hardening (compatible with standalone Next)
+NoNewPrivileges=true
+PrivateTmp=true
+
+[Install]
+WantedBy=multi-user.target

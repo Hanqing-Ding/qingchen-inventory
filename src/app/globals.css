@@ -1,0 +1,127 @@
+@import "tailwindcss";
+
+/*
+  中文优先现代无衬线：
+  阿里巴巴普惠体 → 思源黑体 / Noto Sans SC → OPPO Sans → 系统黑体
+  （不走 next/font/google，避免 turbopack 解析失败）
+*/
+:root {
+  --background: #f7f7f5;
+  --foreground: #0a0a0a;
+  --muted: #6b6b6b;
+  --line: #e4e4e0;
+  --surface: #ffffff;
+  --ink: #111111;
+  --accent: #0a0a0a;
+  --font-cjk-sans:
+    "Alibaba PuHuiTi",
+    "Alibaba PuHuiTi 3.0",
+    "阿里巴巴普惠体",
+    "Source Han Sans SC",
+    "Source Han Sans CN",
+    "思源黑体",
+    "Noto Sans SC",
+    "OPPO Sans",
+    "OPPOSans",
+    "PingFang SC",
+    "Microsoft YaHei",
+    "WenQuanYi Micro Hei",
+    "Helvetica Neue",
+    sans-serif;
+  --font-body: var(--font-cjk-sans);
+  --font-display: var(--font-cjk-sans);
+}
+
+/* OPPO Sans 常用字子集：本机未安装时用本地 woff2 兜底 */
+@font-face {
+  font-family: "OPPO Sans";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("/fonts/OPPOSans-Regular.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "OPPO Sans";
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url("/fonts/OPPOSans-Medium.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "OPPOSans";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("/fonts/OPPOSans-Regular.woff2") format("woff2");
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-muted: var(--muted);
+  --color-line: var(--line);
+  --color-surface: var(--surface);
+  --color-ink: var(--ink);
+  --color-accent: var(--accent);
+  --font-sans: var(--font-body);
+  --font-display: var(--font-display);
+}
+
+body {
+  background:
+    radial-gradient(ellipse 80% 50% at 100% 0%, #ecece8 0%, transparent 55%),
+    radial-gradient(ellipse 60% 40% at 0% 100%, #e8e8e4 0%, transparent 50%),
+    var(--background);
+  color: var(--foreground);
+  font-family: var(--font-body);
+  min-height: 100vh;
+}
+
+/* 出入库单据：A4 打印 / 另存 PDF */
+@page {
+  size: A4;
+  margin: 12mm;
+}
+
+@media print {
+  .no-print {
+    display: none !important;
+  }
+  .print-only {
+    display: block !important;
+  }
+  html,
+  body {
+    background: white !important;
+    color: #000 !important;
+  }
+  /* 遮罩层打印时去掉，只留单据 */
+  body * {
+    visibility: hidden;
+  }
+  .print-sheet,
+  .print-sheet * {
+    visibility: visible;
+  }
+  .print-sheet {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    box-shadow: none !important;
+    border: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    max-width: none !important;
+  }
+  .print-sheet img {
+    print-color-adjust: exact;
+    -webkit-print-color-adjust: exact;
+  }
+}
+
+.print-only {
+  display: none;
+}
